@@ -32,6 +32,12 @@ pipeline {
             }
         }
 
+        stage('trigger config pipeline'){
+            steps{
+                build job: 'config-capstone', parameters: [string(name: 'IMAGE_TAG', value: "${IMAGE_TAG}")]
+            }
+        }
+
         stage('clean docker images') {
             steps {
                 sh 'docker rmi ${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO_NAME}:${IMAGE_TAG}'
